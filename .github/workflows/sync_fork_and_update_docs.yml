@@ -1,0 +1,41 @@
+name: Sync Fork and Update Docs
+
+on:
+  schedule:
+    - cron: '0 * * * *' # This runs the action every hour
+
+jobs:
+  sync_fork_and_update_docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout fork
+      uses: actions/checkout@v2
+      with:
+        ref: sync_and_update_branch
+        token: ${{ secrets.PAT_FOR_SYNC }}
+
+    - name: Set up Git
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "bot@codebridge.ai"
+
+    - name: Sync with original repository
+      run: |
+        git remote add upstream https://github.com/elementor/elementor.git
+        git fetch upstream
+        git merge upstream/main
+        git config user.email "bot@codebridge.ai"
+        git config user.name "CodeBridgeAI Bot"
+        git push origin HEAD:sync_and_update_branch
+
+    - name: Checkout main branch
+      run: |
+        git fetch origin
+        git checkout main
+        git pull origin main
+
+    - name: Rebase main branch with sync_and_update_branch
+      run: |
+        git rebase origin/sync_and_update_branch
+        git push -f origin HEAD:main
