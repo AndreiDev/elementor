@@ -13,6 +13,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         ref: sync_and_update_branch
+        token: ${{ secrets.PAT_FOR_SYNC }}
 
     - name: Set up Git
       run: |
@@ -26,5 +27,4 @@ jobs:
         git merge upstream/main
         git config user.email "bot@codebridge.ai"
         git config user.name "CodeBridgeAI Bot"
-        git remote set-url origin https://x-access-token:${{ secrets.PAT_FOR_SYNC }}@github.com/AndreiDev/elementor.git
         git push origin HEAD:sync_and_update_branch
