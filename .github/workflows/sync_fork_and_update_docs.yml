@@ -23,5 +23,5 @@ jobs:
       run: |
         git remote add upstream https://github.com/elementor/elementor.git
         git fetch upstream
-        git merge upstream/main --allow-unrelated-histories
-        git push
+        git merge upstream/main
+        git push origin HEAD:sync-branch
