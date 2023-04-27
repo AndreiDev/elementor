@@ -1,0 +1,27 @@
+name: Sync Fork and Update Docs
+
+on:
+  schedule:
+    - cron: '0 * * * *' # This runs the action every hour
+
+jobs:
+  sync_fork_and_update_docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout fork
+      uses: actions/checkout@v2
+      with:
+        ref: sync_and_update_branch
+
+    - name: Set up Git
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "bot@codebridge.ai"
+
+    - name: Sync with original repository
+      run: |
+        git remote add upstream https://github.com/elementor/elementor.git
+        git fetch upstream
+        git merge upstream/main --allow-unrelated-histories
+        git push
