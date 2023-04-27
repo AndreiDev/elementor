@@ -24,4 +24,4 @@ jobs:
         git remote add upstream https://github.com/elementor/elementor.git
         git fetch upstream
         git merge upstream/main
-        git push origin HEAD:sync-branch
+        git push origin HEAD:sync_and_update_branch
