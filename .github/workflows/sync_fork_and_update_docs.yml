@@ -32,7 +32,7 @@ jobs:
     - name: Checkout main branch
       run: |
         git fetch origin
-        git checkout main
+        git checkout origin/main
         git pull origin main
 
     - name: Rebase main branch with sync_and_update_branch
